@@ -1,0 +1,176 @@
+<!--
+PROG8020 : Web Design & Devlopment
+Final Exam Set 2
+Created by: Parth Patel
+Date: 16/08/2021
+-->
+
+<%- include('layouts/header'); -%>
+  <!-- Main Container -->
+  <div class="container">
+    <main>
+      <div class="row g-5">
+        <% if(typeof(total) !='undefined'){ %>
+          <!-- Receipt Details Section -->
+          <div id="receipt_section" class="col-md-5 col-lg-4 order-md-last mx-auto">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-success">Thank you for your purchase!</span>
+            </h4>
+
+            <!-- Donor Details -->
+            <div class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%= name %>
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  Membership Number: <%= membershipNumber %>
+                </h6>
+              </div>
+            </div>
+
+            <!-- Payment Receipt -->
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+              <span>Purchase Details</span>
+              <span id="total_products" class="badge bg-success rounded-pill"></span>
+            </h4>
+
+            <!-- Products List -->
+            <ul id="receipt" class="list-group mb-3">
+              <% if(typeof(cart) !='undefined' ) { for(var product of cart){ %>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="my-0">
+                      <%= product.name %>
+                    </h6>
+                    <small class="text-muted">Quantity: <%= product.quantity %> <br /> Unit Price: $<%= product.price %>
+                          </small>
+                  </div>
+                  <span class="text-muted">$<%= product.total.toFixed(2) %></span>
+                </li>
+              <%} }%>
+              <li class="list-group-item d-flex justify-content-between bg-light">
+                <div class="text-success">
+                  <h6 class="my-0">Tax</h6>
+                  <small class="text-muted">
+                    <%= taxRateInPercent %>%
+                  </small>
+                </div>
+                <span class="text-success">$<%= tax.toFixed(2) %></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Total (USD)</span>
+                <strong>$<%= total.toFixed(2) %></strong>
+              </li>
+            </ul>
+
+            <!-- Back To Checkout Button -->
+            <a href="/"><button class="w-100 btn btn-success btn-lg">Go Shop Again</button></a>
+          </div>
+        <% } %>
+        <!-- Checkout Section -->
+        <% if(typeof(total)=='undefined'){ %>
+          <div id="checkout_section" class="col-md-7 col-lg-8 mx-auto">
+            <form class="mb-4" method="POST" action="/">
+              <!-- Products Section -->
+              <h4 class="mb-3">Buy and start making yourself free from today.</h4>
+              <div id="product_error" class="invalid-feedback d-block">
+                <!-- If no products is added, throw error message for minimum products required -->
+                <% if(typeof(formErrors) !='undefined' && formErrors['quantityError'] !='undefined' ){%>
+                  <%=formErrors['quantityError']%>
+                <%}%>
+              </div>
+              <!-- Products List -->
+              <div class="row my-3">
+                <div class="col-md-4 p-1">
+                  <div class="card">
+                    <img src="images/1.png" class="card-img-top mx-auto my-3" alt="Video Doorbells">
+                    <div class="card-body">
+                      <h5 class="card-title">Video Doorbells</h5>
+                      <p class="card-text">$48.98</p>
+                      <input type="text" class="form-control" id="videoDoorbells" name="videoDoorbells" placeholder="10" <%
+                        if(typeof(formData) !='undefined' ){ %> value="<%= formData.videoDoorbells %>" <% } %> value="0">
+                          <div id="videoDoorbells_error" class="invalid-feedback d-block">
+                            <% if(typeof(formErrors) !='undefined' && formErrors['videoDoorbells'] !='undefined' ){%>
+                              <%=formErrors['videoDoorbells']%>
+                            <%}%>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 p-1">
+                  <div class="card">
+                    <img src="images/2.png" class="card-img-top mx-auto my-3" alt="Outdoor Cameras">
+                    <div class="card-body">
+                      <h5 class="card-title">Outdoor Cameras</h5>
+                      <p class="card-text">$149.49</p>
+                      <input type="text" class="form-control" id="outdoorCameras" name="outdoorCameras" placeholder="10" <%
+                        if(typeof(formData) !='undefined' ){ %> value="<%= formData.outdoorCameras %>" <% } %> value="0">
+                          <div id="outdoorCameras_error" class="invalid-feedback d-block">
+                            <% if(typeof(formErrors) !='undefined' && formErrors['outdoorCameras'] !='undefined' ){%>
+                              <%=formErrors['outdoorCameras']%>
+                            <%}%>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 p-1">
+                  <div class="card">
+                    <img src="images/3.png" class="card-img-top mx-auto my-3" alt="Baby Monitors">
+                    <div class="card-body">
+                      <h5 class="card-title">Baby Monitors</h5>
+                      <p class="card-text">$99.99</p>
+                      <input type="text" class="form-control" id="babyMonitors" name="babyMonitors" placeholder="10" <%
+                        if(typeof(formData) !='undefined' ){ %> value="<%= formData.babyMonitors %>" <% } %> value="0">
+                          <div id="babyMonitors_error" class="invalid-feedback d-block">
+                            <% if(typeof(formErrors) !='undefined' && formErrors['babyMonitors'] !='undefined' ){%>
+                              <%=formErrors['babyMonitors']%>
+                            <%}%>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="my-4">
+
+              <!-- Checkout Form -->
+              <h4 class="mb-3">Your Details</h4>
+              <!-- Contact Details -->
+              <div class="row g-3">
+                <div class="col-sm-4">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" class="form-control" name="name" id="name" placeholder="Name" <%
+                    if(typeof(formData) !='undefined' ){ %> value="<%= formData.name %>" <% } %>>
+                      <!-- Error Block -->
+                      <div id="name_error" class="invalid-feedback d-block">
+                        <% if(typeof(formErrors) !='undefined' && formErrors['name'] !='undefined' ){%>
+                          <%=formErrors['name']%>
+                        <%}%>
+                      </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <label for="phone" class="form-label">Membership Number</label>
+                  <input type="text" class="form-control" name="membershipNumber" id="membershipNumber" placeholder="C59-ON9-351" <%
+                    if(typeof(formData) !='undefined' ){ %> value="<%= formData.membershipNumber %>" <% } %>>
+                      <!-- Error Block -->
+                      <div id="membershipNumber_error" class="invalid-feedback d-block">
+                        <% if(typeof(formErrors) !='undefined' && formErrors['membershipNumber'] !='undefined' ){%>
+                          <%=formErrors['membershipNumber']%>
+                        <%}%>
+                      </div>
+                </div>
+              </div>
+
+              <hr class="my-4">
+
+              <!-- Checkout Button -->
+              <button class="w-100 btn btn-success btn-lg" type="submit">Place Order</button>
+            </form>
+          </div>
+        <% } %>
+      </div>
+    </main>
+  </div>
+  <%- include('layouts/footer'); -%>

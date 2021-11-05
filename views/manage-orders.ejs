@@ -1,0 +1,48 @@
+<!--
+PROG8020 : Web Design & Devlopment
+Final Exam Set 2
+Created by: Parth Patel
+Date: 16/08/2021
+-->
+
+<%- include('layouts/header'); -%>
+<!-- Main Container -->
+<div class="container">
+    <main class="text-center px-5">
+        <h1 class="py-3">Manage Orders</h1>
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Customer Name</th>
+                <th>Membership Number</th>
+                <th>Doorbells</th>
+                <th>Cameras</th>
+                <th>Monitors</th>
+                <th>Sub Total</th>
+                <th>Tax</th>
+                <th>Total</th>
+                <th>Manage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Loop for printing orders -->
+              <% for(var [index, order] of orders.entries()){ %>
+              <tr>
+                <td><strong><%= index+1 %></strong></td>
+                <td><%= order.customerName %></td>
+                <td><%= order.membershipNumber %></td>
+                <td><%= order.doorbells %></td>
+                <td><%= order.cameras %></td>
+                <td><%= order.monitors %></td>
+                <td>$<%= order.subTotal.toFixed(2) %></td>
+                <td>$<%= order.tax.toFixed(2) %></td>
+                <td>$<%= order.total.toFixed(2) %></td>
+                <td><a class="text-decoration-none" href="/delete-order/<%= order._id %>">Delete</a></td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+    </main>
+</div>
+<%- include('layouts/footer'); -%>

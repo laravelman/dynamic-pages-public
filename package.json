@@ -1,0 +1,19 @@
+{
+  "name": "finalexam8020set2",
+  "version": "1.0.0",
+  "description": "Final Exam 8020 Set 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Parth Patel",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "*",
+    "express": "*",
+    "ejs": "*",
+    "express-validator": "*",
+    "express-session": "*",
+    "mongoose": "*"
+  }
+}
